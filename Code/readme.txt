@@ -1,15 +1,17 @@
-2016 - CS308  Group X : Project README TEMPLATE 
+2016 - CS308 Drowsiness Detector 
 ================================================ 
  
 Group Info: 
 ------------ 
-+   Student Name (Roll Number) 
-+   Student Name (Roll Number) 
++   Prateek Chandan (120050042)
++   Adit Kabra (120050034)
++	Deependra Patel (120050032)
++ 	Manohar Kumar (120050044)
  
 Extension Of 
 ------------ 
  
-Have you extended your project from any other past porjects? Please mention the title here.  
+This project is completely built from scratch
  
 Project Description 
 ------------------- 

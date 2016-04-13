@@ -1,8 +1,10 @@
 Group A 
-Name: (Roll Number)
+Prateek Chandan (120050042)
+Deependra Patel (120050032)
 
 Group B
-Name: (Roll Number)
+Adit Kabra (120050034)
+Manohar Kumar (120050044)
 
 
-Add a well documented and commented code of your experiments in the respective folders.
+We have added the codes for all the lab assignments

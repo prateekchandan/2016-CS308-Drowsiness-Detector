@@ -1,1 +1,1 @@
-Place the presentaion and report in their respective folder.
+The presentation is in the Presentation folder and report is in report folder
