@@ -1,3 +1,17 @@
+/*
+
+* Author List: Adit kabra, Manohar kumar
+
+* Description: This code will familiarize you with PWM
+* Filename: lab2.c 
+
+* Functions: setup(),  main() , detectKeyPress()
+
+* Global Variables: num, state, switch1, ui32Load, ui32PWMClock, ui8AdjustR, ui8AdjustG, ui8AdjustB,t
+
+
+*/
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
@@ -46,6 +60,18 @@ void setup(){
 	GPIODirModeSet(GPIO_PORTF_BASE, GPIO_PIN_4 | GPIO_PIN_0, GPIO_DIR_MODE_IN);
 	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4 | GPIO_PIN_0,GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 }
+/*
+* Function Name: detectKeyPress(bool)
+
+* Input: selectSwitch , select switch1 or switch2
+
+* Output: 1 if switch press is detected, 0 otherwise
+
+* Description: changes states of switches
+
+* Example Call: detectKeyPress();
+
+*/
 
 int detectKeyPress() {
 	int sw_val = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4);
