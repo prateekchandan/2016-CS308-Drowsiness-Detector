@@ -28,18 +28,22 @@ This project , “drowsiness detection system” will detect that and can be ins
     
  
  
-Installation Instructions 
-========================= 
+##Installation Instructions 
+ 
  
 To run the code , Code Coposer Studio is requred. [Download link](https://www.cse.iitb.ac.in/~erts/html_pages/Resources/CCS-installer/).
  
  
-Demonstration Video 
-=========================  
+##Demonstration Video 
+
 https://youtu.be/Mdl-s5fpiKE
 
-References 
-=========== 
+
+## Log Files
+
+The log file is named as log.csv present in the current folder (2016-cs308-drowsiness_detector/Code)
+
+##References 
  
 
  
