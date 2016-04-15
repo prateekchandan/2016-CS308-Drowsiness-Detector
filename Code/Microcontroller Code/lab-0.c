@@ -8,7 +8,7 @@
  *
  * TCRT500
  * A0(red tape)  - PD2
- * GND(yell) - GND
+ * GND(yellow) - GND
  * VCC(red) - +3.3V
  */
 #include <stdio.h>
@@ -260,24 +260,25 @@ void calcBPM(int sig){
 	}
 
 }
-#define numBlinkSamples 10
+//Variables used for calculating average blink duration
+#define numBlinkSamples 10 //number of samples used for average
 volatile int ready=false;
 volatile int blinkTime = -1;
-volatile int midval = 0;
-volatile int lowval = 0;
-volatile int highval = 0;
-volatile int lowcount = 0;
-volatile int highcount = 0;
-volatile int blinkDuration[numBlinkSamples];
+volatile int midval = 0; //Threshold for eye open/close
+volatile int lowval = 0; //Sensor value when eyelid is closed
+volatile int highval = 0; //Sensor value when eyelid is open
+volatile int lowcount = 0; 
+volatile int highcount = 0; 
+volatile int blinkDuration[numBlinkSamples]; //Array to store last few samples
 volatile int curClosedCount = 0;
 volatile int curClosedSum = 0;
 volatile int iterator = 0;
 volatile int averageBlinkDuration=0;
 volatile int curThreshold = 1000;
 volatile int avgThreshold = 200;
-volatile int alreadyOpen = false;
+volatile int alreadyOpen = false; 
 int count = 0;
-int countLimit = 10;
+int countLimit = 10; //Used for state change
 
 /*
  * Function Name: calcEyeBlink()
@@ -431,10 +432,10 @@ void Timer0IntHandler(void)
 		err=0;
 
 	if(err>=0.1||curClosedCount >= curThreshold){
-		GPIOPinWrite(GPIO_PORTE_BASE,GPIO_PIN_2,31);
+		GPIOPinWrite(GPIO_PORTE_BASE,GPIO_PIN_2,31); //Firing the buzzer
 	}else{
-		GPIOPinWrite(GPIO_PORTE_BASE,GPIO_PIN_2,0);
+		GPIOPinWrite(GPIO_PORTE_BASE,GPIO_PIN_2,0); //Stopping buzzer
 	}
 
-	logData();
+	logData(); //For logging values
 }
