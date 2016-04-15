@@ -1,9 +1,6 @@
 /*
 
-* Author: Texas Instruments 
-
-* Editted by: Saurav Shandilya, Vishwanathan Iyer 
-	      ERTS Lab, CSE Department, IIT Bombay
+* Author List: Adit Kabra, Manohar kumar 
 
 * Description: This code will familiarize you with using GPIO on TMS4C123GXL microcontroller. 
 

@@ -1,19 +1,17 @@
 /*
 
-* Author: Texas Instruments 
+* Author List: Adit kabra, Manohar kumar
 
-* Editted by: Saurav Shandilya, Vishwanathan Iyer 
-	      ERTS Lab, CSE Department, IIT Bombay
+* Description: This code will familiarize you with switch debouncing
 
-* Description: This code will familiarize you with using GPIO on TMS4C123GXL microcontroller. 
+* Filename: lab2.c 
 
-* Filename: lab-1.c 
+* Functions: setup(), ledPinConfig(), switchPinConfig(), main() , detectKeyPress(), Timer0IntHandler() 
 
-* Functions: setup(), ledPinConfig(), switchPinConfig(), main()  
-
-* Global Variables: none
+* Global Variables: sw1Pressed,sw2Pressed,sw1State,sw2State,sw2Status
 
 */
+
 
 #include <stdio.h>
 #include <stdint.h>

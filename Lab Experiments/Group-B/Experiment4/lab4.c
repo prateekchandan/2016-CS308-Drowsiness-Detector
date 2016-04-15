@@ -1,3 +1,17 @@
+/*
+
+* Author List: Adit kabra, Manohar kumar
+
+* Description: This code will familiarize you with ADC and serial communication
+
+* Filename: lab2.c 
+
+* Functions: clrScr(), inpTemp(), UARTIntHandler(), main() , print_temp()
+
+* Global Variables: ui32TempSet,ui32TempAvg,ui32TempValueC,ui32TempValueF
+
+*/
+
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
