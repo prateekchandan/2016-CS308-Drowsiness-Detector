@@ -3,7 +3,7 @@
  
 ##Group Info
  
-+   [Prateek Chandan](http://prtaeekchandan.in) (120050042)
++   [Prateek Chandan](http://prtaeekchandan.in) (120050042) [Leader]
 +   Adit Kabra (120050034)
 +	Deependra Patel (120050032)
 + 	Manohar Kumar (120050044)
