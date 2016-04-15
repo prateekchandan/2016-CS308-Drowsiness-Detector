@@ -62,15 +62,22 @@ void switchPinConfig(void)
 }
 int sw2Status = 0;
 int main(void)
-{
+{	
+	// setup
 	setup();
+	// configure pin
 	ledPinConfig();
 	switchPinConfig();
+
 	int pressed = 0;
 	int state = -1;
-	bool sw2pressed = false;
+	bool sw2pressed = false; // boolean to see if switch 2 is pressed
+
 	while(1){
+		// Delay 
 		SysCtlDelay(20);
+
+		// switch 2 is pressed
 		if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0)==0x00){
 			if(!sw2pressed){
 				sw2Status ++;
@@ -79,6 +86,7 @@ int main(void)
 		} else {
 			sw2pressed = false;
 		}
+		// switch 1 is pressed
 		if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4)!=0x00){
 			pressed = 0;
 		} else {
@@ -91,12 +99,12 @@ int main(void)
 		}
 		if(pressed == 1){
 			switch(state){
-				case 0:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 2); break;
-				case 1:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 4); break;
-				case 2:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 8); break;
+				case 0:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 2); break; // RED
+				case 1:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 4); break; // BLUE
+				case 2:GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 8); break; // GREEN
 			}
 		}else{
-			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);
+			GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0);	// TURN OF LED
 		}
 	}
 }

@@ -1,3 +1,11 @@
+/*
+* Author: Texas Instruments 
+* Editted by: Prateek Chandan , Deependra Patel
+	       CSE Department, IIT Bombay
+* Description: This code is for assignemnt 3
+* Filename: main.c
+* Functions: setup(), detectkeypress(), main()
+*/
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_memmap.h"
@@ -10,20 +18,32 @@
 #include "inc/hw_gpio.h"
 #include "driverlib/rom.h"
 
-#define PWM_FREQUENCY 55
+#define PWM_FREQUENCY 55 // Frequency for pulse width moderation
 
+/*
+ ------ Global Variable Declaration
+*/
 volatile int sw1;
 volatile int num;
 volatile int state;
 
+/*
+* Function Name: setup()
+* Input: none
+* Output: none
+* Description: Set crystal frequency and enable GPIO Peripherals  
+* Example Call: setup();
+*/
 void setup(){
+	// Setup crystal frquency
 	SysCtlClockSet(SYSCTL_SYSDIV_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 	SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
 
+	// Enable peripherals pwm and GPIO
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
-
+	// Configure GPIO as PWM PINS
 	GPIOPinTypePWM(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 	GPIOPinConfigure(GPIO_PF1_M1PWM5);
 	GPIOPinConfigure(GPIO_PF2_M1PWM6);
@@ -36,7 +56,15 @@ void setup(){
 	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4 | GPIO_PIN_0,GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
 }
 
+/*
+* Function Name: detectKeyPress()
+* Input: none
+* Output: 0/1
+* Description: check is key is pressed
+* Example Call: detectkeypress();
+*/
 int detectKeyPress() {
+	// READ SWITCH 1
 	int D0 = GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4);
 	switch (sw1) {
 	case 1:
@@ -61,6 +89,9 @@ int detectKeyPress() {
 	}
 	return 0;
 }
+/*
+* GLOBAL VARIABLES
+*/
 volatile uint32_t ui32Load;
 volatile uint32_t ui32PWMClock;
 volatile uint8_t ui8AdjustR;
@@ -68,6 +99,13 @@ volatile uint8_t ui8AdjustG;
 volatile uint8_t ui8AdjustB;
 volatile int t;
 
+/*
+* Function Name: main()
+* Input: none
+* Output: int
+* Description: main
+* Example Call: no call();
+*/
 int main(void) {
 
 
@@ -80,36 +118,46 @@ int main(void) {
 	int m = 1000000;
 	sw1 = 1;
 
+	// Call to setup
 	setup();
 
+	// Setup PWM Frequency
 	ui32PWMClock = SysCtlClockGet() / 64;
 	ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
 
+	// Configure pwm pins
 	PWMGenConfigure(PWM1_BASE, PWM_GEN_2, PWM_GEN_MODE_DOWN);
 	PWMGenConfigure(PWM1_BASE, PWM_GEN_3, PWM_GEN_MODE_DOWN);
 	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_2, ui32Load);
 	PWMGenPeriodSet(PWM1_BASE, PWM_GEN_3, ui32Load);
-
+	// Map PWM to GPIO Pins
 	PWMOutputState(PWM1_BASE, PWM_OUT_5_BIT | PWM_OUT_6_BIT | PWM_OUT_7_BIT,true);
 	PWMGenEnable(PWM1_BASE, PWM_GEN_2);
 	PWMGenEnable(PWM1_BASE, PWM_GEN_3);
 
 	// Auto Mode
 	while (1) {
-		int k = t % 360;
+		int k = t % 360; // k here is used to interpolate
+
+		// interpolation between red and green
 		if (k < 120) {
 			ui8AdjustR = 120 - k;
 			ui8AdjustG = k;
 			ui8AdjustB = 0;
-		} else if (k < 240) {
+		} 
+		// interpolation between green and blue
+		else if (k < 240) {
 			ui8AdjustR = 0;
 			ui8AdjustG = 240 - k;
 			ui8AdjustB = k - 120;
-		} else {
+		} 
+		// interpolation from blue to red
+		else {
 			ui8AdjustR = k - 240;
 			ui8AdjustG = 0;
 			ui8AdjustB = 360 - k;
 		}
+		// check press for switch 1 to change mode
 		if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) == 0x00) {
 			if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0) == 0x00) {
 				sw1 = 2;
@@ -119,6 +167,7 @@ int main(void) {
 			if (m < 100000)
 				m = 100000;
 		}
+		// check press for switch to change speed
 		if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0) == 0x00) {
 			if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4) == 0x00) {
 				sw1 = 2;
@@ -128,7 +177,7 @@ int main(void) {
 			if (m > 2000000)
 				m = 2000000;
 		}
-
+		// Write output on LED Pins
 		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_5,1 + ui8AdjustR * ui32Load / 1000);
 		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_6,1 + ui8AdjustB * ui32Load / 1000);
 		PWMPulseWidthSet(PWM1_BASE, PWM_OUT_7,1 + ui8AdjustG * ui32Load / 1000);
